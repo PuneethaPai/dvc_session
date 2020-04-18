@@ -1,0 +1,7 @@
+# Mac OS-specific storage files
+.DS_Store
+.idea/
+
+
+# Ignore python cache files:
+*__pycache__/
