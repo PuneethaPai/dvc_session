@@ -7,7 +7,7 @@ from sklearn.decomposition import PCA
 
 @plac.annotations(
     data_path=("Path to source data", "option", "i", str),
-    out_path=("Path to save split data", "option", "o", str)
+    out_path=("Path to save featurized data", "option", "o", str)
 )
 def main(data_path='data/split/', out_path='data/features/'):
     train = pd.read_csv(f'{data_path}train.csv')
