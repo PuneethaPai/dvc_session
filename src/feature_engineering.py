@@ -12,12 +12,14 @@ from sklearn.decomposition import PCA
 def main(data_path='data/split/', out_path='data/features/'):
     train = pd.read_csv(f'{data_path}train.csv')
     test = pd.read_csv(f'{data_path}test.csv')
-    train.drop(columns=['class'], inplace=True)
-    test.drop(columns=['class'], inplace=True)
 
-    pca = PCA(n_components=2).fit(train)
-    train_feature = pd.DataFrame(pca.transform(train))
-    test_feature = pd.DataFrame(pca.transform(test))
+    source_features = train.drop(columns=['class'])
+    pca = PCA(n_components=2).fit(source_features)
+    train_feature = pd.DataFrame(pca.transform(source_features))
+    test_feature = pd.DataFrame(pca.transform(test.drop(columns=['class'])))
+
+    train_feature['class'] = train['class']
+    test_feature['class'] = test['class']
     if not os.path.isdir(out_path):
         os.mkdir(out_path)
     train_feature.to_csv(f'{out_path}train.csv', index=False)
