@@ -1,0 +1,11 @@
+md5: c6f9a7248984d36278b9aa1932d96023
+cmd: python src/feature_engineering.py -i data/split/ -o data/features/
+deps:
+- md5: cc7cd1229f7bd51dfa622f78551d30e5.dir
+  path: data/split
+outs:
+- md5: 0fc8991aeef701782c3edd8d6d50b18c.dir
+  path: data/features
+  cache: true
+  metric: false
+  persist: false
