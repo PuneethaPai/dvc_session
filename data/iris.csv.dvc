@@ -1,0 +1,7 @@
+md5: bb8b4a1d2f0b2e435bf9fd76f97db8ad
+outs:
+- md5: 7fafe97ac39bd89f1718ff44e5ff667e
+  path: iris.csv
+  cache: true
+  metric: false
+  persist: false
