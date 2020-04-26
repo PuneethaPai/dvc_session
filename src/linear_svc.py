@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import plac
 from dagshub import dagshub_logger
-from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import plot_confusion_matrix
 from sklearn.svm import LinearSVC
 
@@ -34,7 +33,7 @@ def main(data_path='data/features/', out_path='data/models/svc/'):
     c_matrix = cmd.confusion_matrix
     accuracy = model.score(X_test, y_test)
 
-    print(f'Finished Training LogisticRegressionModel:\nStats:')
+    print(f'Finished Training LinearSVC Model:\nStats:')
     print(f'\tConfusion Matrix:\n{c_matrix}')
     print(f'\tModel Accuracy: {accuracy}')
     with dagshub_logger(metrics_path=f'{out_path}metrics.csv', hparams_path=f'{out_path}params.yml') as logger:
