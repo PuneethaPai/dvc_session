@@ -1,0 +1,13 @@
+md5: 79a246499e0142b506383b45c3dab3a0
+cmd: python src/logistic_regression.py -i data/features/ -o data/models/logistic/
+deps:
+- md5: 691a090d1721f069003ef29981c9185b
+  path: src/logistic_regression.py
+- md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
+  path: data/features
+outs:
+- md5: fee2a5b189dfca42ac07d2ae9528f0f8.dir
+  path: data/models/logistic
+  cache: true
+  metric: false
+  persist: false
