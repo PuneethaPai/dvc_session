@@ -1,4 +1,4 @@
-md5: d8306c961489a02c8398356cc0bafb1a
+md5: b7b315262754ebc61729c803adabbf39
 cmd: python src/linear_svc.py -i data/features/ -o data/models/svc/
 deps:
 - md5: aa0949bba9fbd0805998fbc83dbef215
@@ -6,8 +6,23 @@ deps:
 - md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
   path: data/features
 outs:
-- md5: 8a2bafb61caf0223ee6afc4eb0829561
+- md5: 461a642df51ad99c79e00205f44a81fe
   path: data/models/svc/model.pkl
   cache: true
+  metric: false
+  persist: false
+- md5: 37bc9d46c521b60595b3e3e32e7852ac
+  path: data/models/svc/metrics.csv
+  cache: false
+  metric: true
+  persist: false
+- md5: 99071474ec296f991d009b1c1925ee31
+  path: data/models/svc/params.yml
+  cache: false
+  metric: true
+  persist: false
+- md5: a09f6fcf22c9e6fd372081309d7dd2c1
+  path: data/models/svc/confusion_matrix.svg
+  cache: false
   metric: false
   persist: false
