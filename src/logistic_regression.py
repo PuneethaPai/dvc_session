@@ -1,11 +1,12 @@
+import _pickle as cpickle
 import os
 
+import matplotlib.pyplot as plt
 import pandas as pd
 import plac
+from dagshub import dagshub_logger
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import confusion_matrix, plot_confusion_matrix
-import matplotlib.pyplot as plt
-import _pickle as cpickle
+from sklearn.metrics import plot_confusion_matrix
 
 
 @plac.annotations(
@@ -27,12 +28,17 @@ def main(data_path='data/features/', out_path='data/models/logistic/'):
     with open(f'{out_path}model.pkl', 'wb+') as fp:
         cpickle.dump(model, fp)
 
-    plot = plot_confusion_matrix(model, X_test, y_test, cmap=plt.cm.Reds).figure_
+    cmd = plot_confusion_matrix(model, X_test, y_test, cmap=plt.cm.Reds)
+    cmd.figure_.savefig(f'{out_path}confusion_matrix.svg', format='svg')
+    c_matrix = cmd.confusion_matrix
+    accuracy = model.score(X_test, y_test)
 
-    plot.savefig(f'{out_path}confusion_matrix.svg', format='svg')
     print(f'Finished Training LogisticRegressionModel:\nStats:')
-    print(f'\tConfusion Matrix:\n{confusion_matrix(y_test, model.predict(X_test))}')
-    print(f'\tModel Accuracy: {model.score(X_test, y_test)}')
+    print(f'\tConfusion Matrix:\n{c_matrix}')
+    print(f'\tModel Accuracy: {accuracy}')
+    with dagshub_logger(metrics_path=f'{out_path}metrics.csv', hparams_path=f'{out_path}params.yml') as logger:
+        logger.log_hyperparams(penalty='l2')
+        logger.log_metrics(accuracy=accuracy, confusion_matrics=c_matrix)
 
 
 if __name__ == '__main__':

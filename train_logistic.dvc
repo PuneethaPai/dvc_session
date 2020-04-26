@@ -1,13 +1,18 @@
-md5: 79a246499e0142b506383b45c3dab3a0
+md5: 9b9fd0e27211c47d4010a91b701bb38a
 cmd: python src/logistic_regression.py -i data/features/ -o data/models/logistic/
 deps:
-- md5: 691a090d1721f069003ef29981c9185b
+- md5: 3d83d9d87aa775fd857bf70125778e1e
   path: src/logistic_regression.py
 - md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
   path: data/features
 outs:
-- md5: fee2a5b189dfca42ac07d2ae9528f0f8.dir
-  path: data/models/logistic
+- md5: b7e9d004c29693c17b4e47fc1943654c
+  path: data/models/logistic/model.pkl
   cache: true
   metric: false
+  persist: false
+- md5: 800712ae2ccb5e556661daad2cffabb0
+  path: data/models/logistic/confusion_matrix.svg
+  cache: false
+  metric: true
   persist: false
