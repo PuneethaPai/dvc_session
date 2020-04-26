@@ -1,0 +1,18 @@
+md5: 2080b775c606d228fa79297a5b84a933
+cmd: python src/linear_svc.py -i data/features/ -o data/models/svc/
+deps:
+- md5: 29f37809d17519c4b5ca0dec6dfa2815
+  path: src/linear_svc.py
+- md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
+  path: data/features
+outs:
+- md5: 0843d51b67b7f67b1acdaa5b70e52444
+  path: data/models/svc/model.pkl
+  cache: true
+  metric: false
+  persist: false
+- md5: 20198b2ea22e6767ff84b2a4b5444f12
+  path: data/models/svc/confusion_matrix.svg
+  cache: false
+  metric: true
+  persist: false
