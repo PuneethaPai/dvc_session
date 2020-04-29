@@ -30,13 +30,12 @@ def save_results(out_path, model, fig):
     if not os.path.isdir(out_path):
         os.makedirs(out_path)
     dump(model, f'{out_path}model.gz')
-
     fig.savefig(f'{out_path}confusion_matrix.svg', format='svg')
 
 
-def read_data(data_path):
+def read_data(data_path: str) -> (pd.DataFrame, pd.DataFrame, pd.Series, pd.Series):
     train = pd.read_csv(f'{data_path}train.csv')
     test = pd.read_csv(f'{data_path}test.csv')
     X_train, y_train = train.drop(columns=['class']), train['class']
     X_test, y_test = test.drop(columns=['class']), test['class']
-    return X_test, X_train, y_test, y_train
+    return X_train, X_test, y_train, y_test

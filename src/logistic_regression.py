@@ -9,7 +9,7 @@ from utils import evaluate_model, print_results, save_results, log_experiment, r
     out_path=("Path to save trained Model", "option", "o", str)
 )
 def main(data_path='data/features/', out_path='data/models/logistic/'):
-    X_test, X_train, y_test, y_train = read_data(data_path)
+    X_train, X_test, y_train, y_test = read_data(data_path)
 
     name = 'LogisticRegression'
     model = LogisticRegression(penalty='l2', n_jobs=4)

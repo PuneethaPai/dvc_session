@@ -1,13 +1,18 @@
-md5: 2f81e93ce70cdb725a169e295618c091
+md5: 37caedd07b53c49dd949feed8a43bd38
 cmd: python src/linear_svc.py -i data/features/ -o data/models/svc/
 deps:
-- md5: aa0949bba9fbd0805998fbc83dbef215
+- md5: 8499f0930fa5fe22cfbd4dcd8953b3ba
   path: src/linear_svc.py
 - md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
   path: data/features
 outs:
-- md5: 2217f6e6c14bbd83941ab9fa4a19b5ef
-  path: data/models/svc/model.pkl
+- md5: c1ab1e52ff817b938c36f0bf655f0b87
+  path: data/models/svc/model.gz
   cache: true
   metric: false
+  persist: false
+- md5: b1312a06b260c571b992dabd47aabdd8
+  path: data/models/svc/metrics.csv
+  cache: false
+  metric: true
   persist: false
