@@ -1,0 +1,13 @@
+md5: 68820b18529d560afab34986d389de16
+cmd: python src/random_forrest.py -i data/features/ -o data/models/r_forrest/
+deps:
+- md5: d0724c555448ecb1ecfd9aa6fea1f1a0
+  path: src/random_forrest.py
+- md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
+  path: data/features
+outs:
+- md5: 7051de63d8ada1210749496631f72ff5
+  path: data/models/r_forrest/model.pkl
+  cache: true
+  metric: false
+  persist: false
