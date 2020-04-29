@@ -1,13 +1,18 @@
-md5: 68820b18529d560afab34986d389de16
+md5: c9919195f42d524cb520ec238f8f95b7
 cmd: python src/random_forrest.py -i data/features/ -o data/models/r_forrest/
 deps:
-- md5: d0724c555448ecb1ecfd9aa6fea1f1a0
+- md5: cdd056006a8215d7ca9f18265698b6e6
   path: src/random_forrest.py
 - md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
   path: data/features
 outs:
-- md5: 7051de63d8ada1210749496631f72ff5
-  path: data/models/r_forrest/model.pkl
+- md5: 6aee28257ba58d66723919dd994c86a2
+  path: data/models/r_forrest/model.gz
   cache: true
   metric: false
+  persist: false
+- md5: 98078ae25a3c77c08cff682f79a8e80e
+  path: data/models/r_forrest/metrics.csv
+  cache: false
+  metric: true
   persist: false
