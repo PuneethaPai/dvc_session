@@ -3,7 +3,7 @@ import os
 import matplotlib.pyplot as plt
 import pandas as pd
 from dagshub import dagshub_logger
-from joblib import dump
+from joblib import dump, load
 from sklearn.metrics import plot_confusion_matrix
 
 
@@ -39,3 +39,7 @@ def read_data(data_path: str) -> (pd.DataFrame, pd.DataFrame, pd.Series, pd.Seri
     X_train, y_train = train.drop(columns=['class']), train['class']
     X_test, y_test = test.drop(columns=['class']), test['class']
     return X_train, X_test, y_train, y_test
+
+
+def load_model(path):
+    return load(f'{path}/model.gz')

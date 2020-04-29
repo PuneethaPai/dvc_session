@@ -1,12 +1,7 @@
-import os
-
-import matplotlib.pyplot as plt
-import pandas as pd
 import plac
-from dagshub import dagshub_logger
-from joblib import dump, load
 from sklearn.ensemble import VotingClassifier
-from sklearn.metrics import plot_confusion_matrix
+
+from utils import read_data, load_model, evaluate_model, print_results, save_results, log_experiment
 
 
 @plac.annotations(
@@ -15,15 +10,12 @@ from sklearn.metrics import plot_confusion_matrix
     out_path=("Path to save trained Model", "option", "o", str)
 )
 def main(data_path='data/features/', model_path='data/models/', out_path='data/models/ensemble/'):
-    train = pd.read_csv(f'{data_path}train.csv')
-    test = pd.read_csv(f'{data_path}test.csv')
+    X_train, X_test, y_train, y_test = read_data(data_path)
 
-    X_train, y_train = train.drop(columns=['class']), train['class']
-    X_test, y_test = test.drop(columns=['class']), test['class']
-
-    cl1 = load_model(model_path, 'logistic')
-    cl2 = load_model(model_path, 'svc')
-    cl3 = load_model(model_path, 'r_forrest')
+    name = 'Ensemble'
+    cl1 = load_model(f'{model_path}/logistic/')
+    cl2 = load_model(f'{model_path}/svc/')
+    cl3 = load_model(f'{model_path}/r_forrest/')
     estimators = [
         ('l_regression', cl1),
         ('l_svc', cl2),
@@ -33,26 +25,12 @@ def main(data_path='data/features/', model_path='data/models/', out_path='data/m
     model = VotingClassifier(estimators)
     model.fit(X_train, y_train)
 
-    if not os.path.isdir(out_path):
-        os.makedirs(out_path)
-    dump(model, f'{out_path}model.pkl')
+    accuracy, c_matrix, fig = evaluate_model(model, X_test, y_test)
+    print_results(accuracy, c_matrix, name)
 
-    cmd = plot_confusion_matrix(model, X_test, y_test, cmap=plt.cm.Reds)
-    cmd.figure_.savefig(f'{out_path}confusion_matrix.svg', format='svg')
-    c_matrix = cmd.confusion_matrix
-    accuracy = model.score(X_test, y_test)
-
-    print(f'Finished Training Ensemble Model:\nStats:')
-    print(f'\tConfusion Matrix:\n{c_matrix}')
-    print(f'\tModel Accuracy: {accuracy}')
-    with dagshub_logger(metrics_path=f'{out_path}theBestMetric.csv',
-                        hparams_path=f'{out_path}theBestParams.yaml') as logger:
-        logger.log_hyperparams(voting=model.voting)
-        logger.log_metrics(accuracy=accuracy)
-
-
-def load_model(model_path, model_name):
-    return load(f'{model_path}{model_name}/model.pkl')
+    save_results(out_path, model, fig)
+    log_experiment(out_path, params=dict(name=name, voting='hard'),
+                   metrics=dict(accuracy=accuracy, confusion_matrics=c_matrix))
 
 
 if __name__ == '__main__':
