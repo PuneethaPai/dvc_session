@@ -1,4 +1,4 @@
-md5: 9b9fd0e27211c47d4010a91b701bb38a
+md5: a3e240299fbdc3546c7e840dc7932814
 cmd: python src/logistic_regression.py -i data/features/ -o data/models/logistic/
 deps:
 - md5: 3d83d9d87aa775fd857bf70125778e1e
@@ -11,8 +11,4 @@ outs:
   cache: true
   metric: false
   persist: false
-- md5: 800712ae2ccb5e556661daad2cffabb0
-  path: data/models/logistic/confusion_matrix.svg
-  cache: false
-  metric: true
-  persist: false
+
