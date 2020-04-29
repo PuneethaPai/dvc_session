@@ -1,0 +1,13 @@
+md5: a6188018e421d3674b25f352f1c66668
+cmd: python src/ensemble.py -i data/features/ -m data/models/ -o data/models/ensemble/
+deps:
+- md5: a8d99190bc05765fe5dd524200586d96
+  path: src/ensemble.py
+- md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
+  path: data/features
+outs:
+- md5: 44e9cac21887258c78a20e68d447538a
+  path: data/models/ensemble/model.pkl
+  cache: true
+  metric: false
+  persist: false
