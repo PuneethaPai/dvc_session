@@ -30,7 +30,8 @@ def save_results(out_path, model, fig):
     if not os.path.isdir(out_path):
         os.makedirs(out_path)
     dump(model, f'{out_path}model.gz')
-    fig.savefig(f'{out_path}confusion_matrix.svg', format='svg')
+    if fig:
+        fig.savefig(f'{out_path}confusion_matrix.svg', format='svg')
 
 
 def read_data(data_path: str) -> (pd.DataFrame, pd.DataFrame, pd.Series, pd.Series):
