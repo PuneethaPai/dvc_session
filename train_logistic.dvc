@@ -1,4 +1,4 @@
-md5: edf4e20d58197f24191f37820112d106
+md5: 0e1900ff2b473636e7c61e1acf5e3f2b
 cmd: python src/logistic_regression.py -i data/features/ -o data/models/logistic/
 deps:
 - md5: 85eebbfdd91d46555296af2fad5731a3
@@ -16,12 +16,7 @@ outs:
   cache: true
   metric: false
   persist: false
-- md5: 2a4cf434fea045e453277dc339dddbdb
-  path: data/models/logistic/params.yml
-  cache: false
-  metric: false
-  persist: false
-- md5: b8afee37cc1bb6a1f89b512ac582ecdf
+- md5: 58e5393052e79a944288801f8532ae2d
   path: data/models/logistic/metrics.csv
   cache: false
   metric: true

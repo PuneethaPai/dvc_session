@@ -64,7 +64,6 @@ dvc run -f featurize.dvc\
  -p pca\
  -o data/features\
  -o data/models/pca/model.gz\
- -O data/models/pca/params.yml\
  -M data/models/pca/metrics.csv\
  python src/feature_engineering.py -i "data/split/" -o "data/features/" -o "data/models/pca/"
 ```
@@ -76,7 +75,6 @@ dvc run -f train_logistic.dvc\
  -d data/features\
  -p logistic\
  -o data/models/logistic/model.gz\
- -O data/models/logistic/params.yml\
  -M data/models/logistic/metrics.csv\
  python src/logistic_regression.py -i "data/features/" -o "data/models/logistic/"
 ```
@@ -88,7 +86,6 @@ dvc run -f train_svc.dvc\
  -d data/features\
  -p svc\
  -o data/models/svc/model.gz\
- -O data/models/svc/params.yml\
  -M data/models/svc/metrics.csv\
  python src/linear_svc.py -i "data/features/" -o "data/models/svc/"
 ```
@@ -100,7 +97,6 @@ dvc run -f train_forrest.dvc\
  -d data/features\
  -p forrest\
  -o data/models/r_forrest/model.gz\
- -O data/models/r_forrest/params.yml\
  -M data/models/r_forrest/metrics.csv\
  python src/random_forrest.py -i "data/features/" -o "data/models/r_forrest/"
 ```
@@ -115,7 +111,6 @@ dvc run -f train_ensemble.dvc\
  -d data/models/r_forrest/model.gz\
  -p ensemble\
  -o data/models/ensemble/model.gz\
- -O data/models/ensemble/params.yml\
  -M data/models/ensemble/metrics.csv\
  python src/ensemble.py -i "data/features/" -m "data/models/" -o "data/models/ensemble/"
 ```
