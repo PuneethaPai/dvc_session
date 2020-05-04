@@ -1,7 +1,7 @@
-md5: 8fcbdff73a83295a429bed43771c6aa1
+md5: d69a2c72c53877f150b6519584fadc0b
 cmd: python src/ensemble.py -i data/features/ -m data/models/ -o data/models/ensemble/
 deps:
-- md5: 1d64e1152f7f5cf6d9e7bd64bf42732a
+- md5: 87cf1ab5aa611e388d9170859240aca8
   path: src/ensemble.py
 - md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
   path: data/features
@@ -9,20 +9,24 @@ deps:
   path: data/models/logistic/model.gz
 - md5: 75250bea70cbd3b7ddf158c1bcd7124c
   path: data/models/svc/model.gz
-- md5: b243935028ed8cd831d48783d7a8da58
+- md5: 5d99a76c334bc8bb887be6fae149d5b5
   path: data/models/r_forrest/model.gz
+- path: params.yaml
+  params:
+    ensemble:
+      voting: hard
 outs:
-- md5: dd3a8699855141d9f1359439da486acc
+- md5: 6e0e41cdeef01f29bfe5b09f6187b363
   path: data/models/ensemble/model.gz
   cache: true
   metric: false
   persist: false
-- md5: 7204e382833163908c9ff69f07de83b9
+- md5: fc090c7f891c854029828577e9f05fb5
   path: data/models/ensemble/params.yml
   cache: false
   metric: false
   persist: false
-- md5: 2e9cb957d2293672b00b950960a8711c
+- md5: a515247248232e854cecefbeae60ad0f
   path: data/models/ensemble/metrics.csv
   cache: false
   metric: true

@@ -1,7 +1,7 @@
 import plac
 from sklearn.ensemble import RandomForestClassifier
 
-from utils import evaluate_model, print_results, save_results, log_experiment, read_data
+from utils import evaluate_model, print_results, save_results, log_experiment, read_data, read_params
 
 
 @plac.annotations(
@@ -14,14 +14,15 @@ def main(data_path='data/features/', out_path='data/models/r_forrest/', n_estima
     X_train, X_test, y_train, y_test = read_data(data_path)
 
     name = 'RandomForrest'
-    model = RandomForestClassifier(n_estimators=n_estimators, max_samples=max_samples, n_jobs=4)
+    params = read_params('params.yaml', 'forrest')
+    model = RandomForestClassifier(**params)
     model.fit(X_train, y_train)
 
     accuracy, c_matrix, fig = evaluate_model(model, X_test, y_test)
     print_results(accuracy, c_matrix, name)
 
     save_results(out_path, model, fig)
-    log_experiment(out_path, params=dict(name=name, n_estimators=n_estimators, max_samples=max_samples),
+    log_experiment(out_path, params=params,
                    metrics=dict(accuracy=accuracy, confusion_matrics=c_matrix))
 
 

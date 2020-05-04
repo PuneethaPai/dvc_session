@@ -98,6 +98,7 @@ Define `Stage3.c` => `train_forrest.dvc` i.e Fit Random Forrest Model.
 dvc run -f train_forrest.dvc\
  -d src/random_forrest.py\
  -d data/features\
+ -p forrest\
  -o data/models/r_forrest/model.gz\
  -O data/models/r_forrest/params.yml\
  -M data/models/r_forrest/metrics.csv\
@@ -112,6 +113,7 @@ dvc run -f train_ensemble.dvc\
  -d data/models/logistic/model.gz\
  -d data/models/svc/model.gz\
  -d data/models/r_forrest/model.gz\
+ -p ensemble\
  -o data/models/ensemble/model.gz\
  -O data/models/ensemble/params.yml\
  -M data/models/ensemble/metrics.csv\

@@ -10,3 +10,14 @@ logistic:
 svc:
   #  name: LinearSVC
   penalty: l2
+
+
+forrest:
+  #  name: LinearSVC
+  n_estimators: 10
+  max_samples: 30
+  n_jobs: 4
+
+ensemble:
+  #  name: LinearSVC
+  voting: hard
