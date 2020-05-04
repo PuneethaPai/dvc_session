@@ -1,8 +1,12 @@
 pca:
-#  name: PCA
+  #  name: PCA
   n_components: 2
 
 logistic:
-#  name: LogisticRegression
+  #  name: LogisticRegression
   penalty: l2
   n_jobs: 4
+
+svc:
+  #  name: LinearSVC
+  penalty: l2

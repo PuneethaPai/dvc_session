@@ -86,6 +86,7 @@ Define `Stage3.b` => `train_svc.dvc` i.e Fit Linear SVC Model.
 dvc run -f train_svc.dvc\
  -d src/linear_svc.py\
  -d data/features\
+ -p svc\
  -o data/models/svc/model.gz\
  -O data/models/svc/params.yml\
  -M data/models/svc/metrics.csv\
