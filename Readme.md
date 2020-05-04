@@ -74,6 +74,7 @@ Define `Stage3.a` => `train_logistic.dvc` i.e Fit Logistic Regression Model.
 dvc run -f train_logistic.dvc\
  -d src/logistic_regression.py\
  -d data/features\
+ -p logistic\
  -o data/models/logistic/model.gz\
  -O data/models/logistic/params.yml\
  -M data/models/logistic/metrics.csv\

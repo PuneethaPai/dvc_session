@@ -2,9 +2,11 @@ import os
 
 import matplotlib.pyplot as plt
 import pandas as pd
+import yaml
 from dagshub import dagshub_logger
 from joblib import dump, load
 from sklearn.metrics import plot_confusion_matrix
+from yaml import CLoader as Loader
 
 
 def log_experiment(out_path, params: dict, metrics: dict):
@@ -44,3 +46,9 @@ def read_data(data_path: str) -> (pd.DataFrame, pd.DataFrame, pd.Series, pd.Seri
 
 def load_model(path):
     return load(f'{path}/model.gz')
+
+
+def read_params(file='params.yaml', model='pca'):
+    with open(file, 'r') as fp:
+        params = yaml.load(fp, Loader)
+    return params[model]

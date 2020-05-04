@@ -1,12 +1,10 @@
 import os
-import yaml
-from yaml import CLoader as Loader
 
 import pandas as pd
 import plac
 from sklearn.decomposition import PCA
 
-from utils import log_experiment, save_results, read_data
+from utils import log_experiment, save_results, read_data, read_params
 
 
 @plac.annotations(
@@ -38,12 +36,6 @@ def main(data_path='data/split/', feature_path='data/features/', out_path='data/
     log_experiment(out_path, params=params,
                    metrics=dict(explained_variance_=pca.explained_variance_,
                                 explained_variance_ratio_=pca.explained_variance_ratio_))
-
-
-def read_params(file='params.yaml', model='pca'):
-    with open(file, 'r') as fp:
-        params = yaml.load(fp, Loader)
-    return params[model]
 
 
 if __name__ == '__main__':
