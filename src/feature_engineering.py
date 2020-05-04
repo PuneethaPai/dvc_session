@@ -1,4 +1,6 @@
 import os
+import yaml
+from yaml import CLoader as Loader
 
 import pandas as pd
 import plac
@@ -15,7 +17,8 @@ from utils import log_experiment, save_results, read_data
 def main(data_path='data/split/', feature_path='data/features/', out_path='data/pca/'):
     X_train, X_test, y_train, y_test = read_data(data_path)
 
-    pca = PCA(n_components=2).fit(X_train)
+    params = read_params('params.yaml', 'pca')
+    pca = PCA(**params).fit(X_train)
 
     train_feature = pd.DataFrame(pca.transform(X_train))
     test_feature = pd.DataFrame(pca.transform(X_test))
@@ -32,9 +35,15 @@ def main(data_path='data/split/', feature_path='data/features/', out_path='data/
     print(f'\tExplained Variance: {pca.explained_variance_}')
     print(f'\tExplained Variance Ratio: {pca.explained_variance_ratio_}')
 
-    log_experiment(out_path, params=dict(name='PCA', n_components=2),
+    log_experiment(out_path, params=params,
                    metrics=dict(explained_variance_=pca.explained_variance_,
                                 explained_variance_ratio_=pca.explained_variance_ratio_))
+
+
+def read_params(file='params.yaml', model='pca'):
+    with open(file, 'r') as fp:
+        params = yaml.load(fp, Loader)
+    return params[model]
 
 
 if __name__ == '__main__':

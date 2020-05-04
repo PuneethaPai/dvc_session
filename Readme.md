@@ -61,6 +61,7 @@ Define `Stage2` => `featurize.dvc` i.e Feature Engineering.
 dvc run -f featurize.dvc\
  -d data/split\
  -d src/feature_engineering.py\
+ -p pca\
  -o data/features\
  -o data/models/pca/model.gz\
  -O data/models/pca/params.yml\

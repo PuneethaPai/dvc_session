@@ -1,10 +1,14 @@
-md5: 4674c7e6087ed789615851f60998ca38
+md5: 8f6b3d7ee38cd1a27917cd1bfb0c8bce
 cmd: python src/feature_engineering.py -i data/split/ -o data/features/ -o data/models/pca/
 deps:
 - md5: cc7cd1229f7bd51dfa622f78551d30e5.dir
   path: data/split
-- md5: 9b53fcd42571a5f8ea599026e86e6ca6
+- md5: 379a515f4151704d9c251da85fa30fef
   path: src/feature_engineering.py
+- path: params.yaml
+  params:
+    pca:
+      n_components: 2
 outs:
 - md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
   path: data/features
@@ -16,12 +20,12 @@ outs:
   cache: true
   metric: false
   persist: false
-- md5: dcb9ce0bd36c168bec6d8655910abc08
+- md5: 51e95b159e43049608dade337f036fad
   path: data/models/pca/params.yml
   cache: false
   metric: false
   persist: false
-- md5: 5dff90ffacd409fc31a4012338bb8c8d
+- md5: e1210b4c5511c39af1959908929b9301
   path: data/models/pca/metrics.csv
   cache: false
   metric: true
