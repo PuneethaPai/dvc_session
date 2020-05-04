@@ -1,3 +1,4 @@
+PyYAML==5.3.1
 joblib==0.14.1
 dagshub==0.0.2rc1
 matplotlib
