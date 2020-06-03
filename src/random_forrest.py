@@ -1,20 +1,32 @@
 import plac
 from sklearn.ensemble import RandomForestClassifier
 
-from utils import evaluate_model, print_results, save_results, log_experiment, read_data, read_params
+from utils import (
+    evaluate_model,
+    print_results,
+    save_results,
+    log_experiment,
+    read_data,
+    read_params,
+)
 
 
 @plac.annotations(
     data_path=("Path to source data", "option", "i", str),
     n_estimators=("Path to save trained Model", "option", "e", str),
     max_samples=("Path to save trained Model", "option", "s", str),
-    out_path=("Path to save trained Model", "option", "o", str)
+    out_path=("Path to save trained Model", "option", "o", str),
 )
-def main(data_path='data/features/', out_path='data/models/r_forrest/', n_estimators=10, max_samples=30):
+def main(
+    data_path="data/features/",
+    out_path="data/models/r_forrest/",
+    n_estimators=10,
+    max_samples=30,
+):
     X_train, X_test, y_train, y_test = read_data(data_path)
 
-    name = 'RandomForrest'
-    params = read_params('params.yaml', 'forrest')
+    name = "RandomForrest"
+    params = read_params("params.yaml", "forrest")
     model = RandomForestClassifier(**params)
     model.fit(X_train, y_train)
 
@@ -22,9 +34,10 @@ def main(data_path='data/features/', out_path='data/models/r_forrest/', n_estima
     print_results(accuracy, c_matrix, name)
 
     save_results(out_path, model, fig)
-    log_experiment(out_path, params=params,
-                   metrics=dict(accuracy=accuracy, confusion_matrics=c_matrix))
+    log_experiment(
+        out_path, metrics=dict(accuracy=accuracy, confusion_matrics=c_matrix)
+    )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     plac.call(main)

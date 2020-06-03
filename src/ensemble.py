@@ -30,8 +30,7 @@ def main(data_path='data/features/', model_path='data/models/', out_path='data/m
     print_results(accuracy, c_matrix, name)
 
     save_results(out_path, model, fig)
-    log_experiment(out_path, params=params,
-                   metrics=dict(accuracy=accuracy, confusion_matrics=c_matrix))
+    log_experiment(out_path, metrics=dict(accuracy=accuracy, confusion_matrics=c_matrix))
 
 
 if __name__ == '__main__':
