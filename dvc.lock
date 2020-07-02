@@ -1,0 +1,101 @@
+split:
+  cmd: python src/train_test_split.py -i data/iris.csv -o data/split/
+  deps:
+  - path: data/iris.csv
+    md5: 7fafe97ac39bd89f1718ff44e5ff667e
+  - path: src/train_test_split.py
+    md5: 2a33b1aedfbdf36e9ab7d1e46bd3778d
+  outs:
+  - path: data/split
+    md5: cc7cd1229f7bd51dfa622f78551d30e5.dir
+featurize:
+  cmd: python src/feature_engineering.py -i data/split/ -o data/features/ -o data/models/pca/
+  deps:
+  - path: data/split
+    md5: cc7cd1229f7bd51dfa622f78551d30e5.dir
+  - path: src/feature_engineering.py
+    md5: 6995fabca56fe2c37053f45b80a01c76
+  params:
+    params.yaml:
+      pca:
+        n_components: 2
+  outs:
+  - path: data/features
+    md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
+  - path: data/models/pca/metrics.csv
+    md5: 53a33493ee1d14c41c652c457b91bb2b
+  - path: data/models/pca/model.gz
+    md5: 9d97c5887c3e0e333e1a33ddbb5a64fa
+train_logistic:
+  cmd: python src/logistic_regression.py -i data/features/ -o data/models/logistic/
+  deps:
+  - path: data/features
+    md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
+  - path: src/logistic_regression.py
+    md5: 85eebbfdd91d46555296af2fad5731a3
+  params:
+    params.yaml:
+      logistic:
+        penalty: l2
+        n_jobs: 4
+  outs:
+  - path: data/models/logistic/metrics.csv
+    md5: 2e6949aea4cc5f97f05d860584f57ee2
+  - path: data/models/logistic/model.gz
+    md5: 5d142e71dfd770442499fc483cba9a17
+train_svc:
+  cmd: python src/linear_svc.py -i data/features/ -o data/models/svc/
+  deps:
+  - path: data/features
+    md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
+  - path: src/linear_svc.py
+    md5: bef3d75e9fdedcb26e94182d5338fddf
+  params:
+    params.yaml:
+      svc:
+        penalty: l2
+  outs:
+  - path: data/models/svc/metrics.csv
+    md5: 95b63047921e8b77b1ef437b7dd323a4
+  - path: data/models/svc/model.gz
+    md5: ee8ead1ca79bf0f58f18ccd1faf26743
+train_forrest:
+  cmd: python src/random_forrest.py -i data/features/ -o data/models/r_forrest/
+  deps:
+  - path: data/features
+    md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
+  - path: src/random_forrest.py
+    md5: e918c4e9be1c0ca28db9c215f8c53d0b
+  params:
+    params.yaml:
+      forrest:
+        n_estimators: 10
+        max_samples: 30
+        n_jobs: 4
+  outs:
+  - path: data/models/r_forrest/metrics.csv
+    md5: 64d531fb350ae55f0c2e07b8bbbd243a
+  - path: data/models/r_forrest/model.gz
+    md5: e355e50b9ea1733b54621c4871c2fa7e
+train_ensemble:
+  cmd: python src/ensemble.py -i data/features/ -m data/models/ -o data/models/ensemble/
+  deps:
+  - path: data/features
+    md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
+  - path: data/models/logistic/model.gz
+    md5: 5d142e71dfd770442499fc483cba9a17
+  - path: data/models/r_forrest/model.gz
+    md5: e355e50b9ea1733b54621c4871c2fa7e
+  - path: data/models/svc/model.gz
+    md5: ee8ead1ca79bf0f58f18ccd1faf26743
+  - path: src/ensemble.py
+    md5: 87cf1ab5aa611e388d9170859240aca8
+  params:
+    params.yaml:
+      ensemble:
+        voting: hard
+  outs:
+  - path: data/models/ensemble/metrics.csv
+    md5: 82dda51857f4190ca741aaba1cfda8b7
+  - path: data/models/ensemble/model.gz
+    md5: b4f83aa1921acda7160b548ec7886823

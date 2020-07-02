@@ -1,0 +1,72 @@
+stages:
+  split:
+    cmd: python src/train_test_split.py -i data/iris.csv -o data/split/
+    deps:
+    - data/iris.csv
+    - src/train_test_split.py
+    outs:
+    - data/split
+  featurize:
+    cmd: python src/feature_engineering.py -i data/split/ -o data/features/ -o data/models/pca/
+    deps:
+    - data/split
+    - src/feature_engineering.py
+    params:
+    - pca
+    outs:
+    - data/features
+    - data/models/pca/model.gz
+    metrics:
+    - data/models/pca/metrics.csv:
+        cache: false
+  train_logistic:
+    cmd: python src/logistic_regression.py -i data/features/ -o data/models/logistic/
+    deps:
+    - data/features
+    - src/logistic_regression.py
+    params:
+    - logistic
+    outs:
+    - data/models/logistic/model.gz
+    metrics:
+    - data/models/logistic/metrics.csv:
+        cache: false
+  train_svc:
+    cmd: python src/linear_svc.py -i data/features/ -o data/models/svc/
+    deps:
+    - data/features
+    - src/linear_svc.py
+    params:
+    - svc
+    outs:
+    - data/models/svc/model.gz
+    metrics:
+    - data/models/svc/metrics.csv:
+        cache: false
+  train_forrest:
+    cmd: python src/random_forrest.py -i data/features/ -o data/models/r_forrest/
+    deps:
+    - data/features
+    - src/random_forrest.py
+    params:
+    - forrest
+    outs:
+    - data/models/r_forrest/model.gz
+    metrics:
+    - data/models/r_forrest/metrics.csv:
+        cache: false
+  train_ensemble:
+    cmd: python src/ensemble.py -i data/features/ -m data/models/ -o data/models/ensemble/
+    deps:
+    - data/features
+    - data/models/logistic/model.gz
+    - data/models/r_forrest/model.gz
+    - data/models/svc/model.gz
+    - src/ensemble.py
+    params:
+    - ensemble
+    outs:
+    - data/models/ensemble/model.gz
+    metrics:
+    - data/models/ensemble/metrics.csv:
+        cache: false
