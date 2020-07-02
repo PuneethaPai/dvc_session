@@ -14,7 +14,7 @@ featurize:
   - path: data/split
     md5: cc7cd1229f7bd51dfa622f78551d30e5.dir
   - path: src/feature_engineering.py
-    md5: 6995fabca56fe2c37053f45b80a01c76
+    md5: 033299a5a57d8195a4c072f49a0317af
   params:
     params.yaml:
       pca:
@@ -23,7 +23,7 @@ featurize:
   - path: data/features
     md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
   - path: data/models/pca/metrics.csv
-    md5: 53a33493ee1d14c41c652c457b91bb2b
+    md5: f9fc6e3e8370fe52abe9b1136924778f
   - path: data/models/pca/model.gz
     md5: 9d97c5887c3e0e333e1a33ddbb5a64fa
 train_logistic:
@@ -32,40 +32,41 @@ train_logistic:
   - path: data/features
     md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
   - path: src/logistic_regression.py
-    md5: 85eebbfdd91d46555296af2fad5731a3
+    md5: e04d6d62e5d39a535143a6733dd74fb9
   params:
     params.yaml:
       logistic:
         penalty: l2
         n_jobs: 4
+        fit_intercept: false
   outs:
   - path: data/models/logistic/metrics.csv
-    md5: 2e6949aea4cc5f97f05d860584f57ee2
+    md5: aa2ba7d85bbfb318bb091f4de1aeaa0e
   - path: data/models/logistic/model.gz
-    md5: 5d142e71dfd770442499fc483cba9a17
+    md5: 00a3ccdf8f698a4504a2f226ff0052f9
 train_svc:
   cmd: python src/linear_svc.py -i data/features/ -o data/models/svc/
   deps:
   - path: data/features
     md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
   - path: src/linear_svc.py
-    md5: bef3d75e9fdedcb26e94182d5338fddf
+    md5: f77e1c0e516217b4ab0dc4912d6151ab
   params:
     params.yaml:
       svc:
         penalty: l2
   outs:
   - path: data/models/svc/metrics.csv
-    md5: 95b63047921e8b77b1ef437b7dd323a4
+    md5: ddc87d2b44bcfe80ae6c1d6ef5c144f8
   - path: data/models/svc/model.gz
-    md5: ee8ead1ca79bf0f58f18ccd1faf26743
+    md5: 671de9a73c995d2d7de51131be429ba2
 train_forrest:
   cmd: python src/random_forrest.py -i data/features/ -o data/models/r_forrest/
   deps:
   - path: data/features
     md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
   - path: src/random_forrest.py
-    md5: e918c4e9be1c0ca28db9c215f8c53d0b
+    md5: 073d71bb08c2b6629853f7e388f89da3
   params:
     params.yaml:
       forrest:
@@ -74,28 +75,28 @@ train_forrest:
         n_jobs: 4
   outs:
   - path: data/models/r_forrest/metrics.csv
-    md5: 64d531fb350ae55f0c2e07b8bbbd243a
+    md5: 262b51aa0a1a6b1cbfefe3787936860d
   - path: data/models/r_forrest/model.gz
-    md5: e355e50b9ea1733b54621c4871c2fa7e
+    md5: 3448ed7f38a9f144788016636b6aae13
 train_ensemble:
   cmd: python src/ensemble.py -i data/features/ -m data/models/ -o data/models/ensemble/
   deps:
   - path: data/features
     md5: ae8b2ac6927d2d20a0f6463223bb7c18.dir
   - path: data/models/logistic/model.gz
-    md5: 5d142e71dfd770442499fc483cba9a17
+    md5: 00a3ccdf8f698a4504a2f226ff0052f9
   - path: data/models/r_forrest/model.gz
-    md5: e355e50b9ea1733b54621c4871c2fa7e
+    md5: 3448ed7f38a9f144788016636b6aae13
   - path: data/models/svc/model.gz
-    md5: ee8ead1ca79bf0f58f18ccd1faf26743
+    md5: 671de9a73c995d2d7de51131be429ba2
   - path: src/ensemble.py
-    md5: 87cf1ab5aa611e388d9170859240aca8
+    md5: 69bebf96742e27b7994de9a8721cbf27
   params:
     params.yaml:
       ensemble:
         voting: hard
   outs:
   - path: data/models/ensemble/metrics.csv
-    md5: 82dda51857f4190ca741aaba1cfda8b7
+    md5: 201bc54bbf36d82e5c432da32970effe
   - path: data/models/ensemble/model.gz
-    md5: b4f83aa1921acda7160b548ec7886823
+    md5: 2db2b3bc48a82f563001a9da177993ed
